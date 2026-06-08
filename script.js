@@ -6,7 +6,6 @@ const sound = new Audio("sound/meme.mp3");
 let tasks = [];
 loadTasks();
 
-
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
@@ -27,7 +26,10 @@ btn.addEventListener("click", function () {
     sound.play();
   }
 
-  tasks.push(input.value);
+  tasks.push({
+    text: input.value,
+    done: false,
+  });
   saveTasks();
   render();
 
@@ -39,10 +41,15 @@ function render() {
 
   for (let i = 0; i < tasks.length; i++) {
     const li = document.createElement("li");
-    li.textContent = i + 1 + ". " + tasks[i];
+    li.textContent = i + 1 + ". " + tasks[i].text;
+    if (tasks[i].done) {
+      li.classList.add("done");
+    }
 
     li.addEventListener("click", function () {
       li.classList.toggle("done");
+      tasks[i].done = !tasks[i].done;
+      saveTasks();
     });
 
     li.addEventListener("dblclick", function () {
