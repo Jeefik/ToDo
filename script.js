@@ -41,10 +41,18 @@ function render() {
 
   for (let i = 0; i < tasks.length; i++) {
     const li = document.createElement("li");
-    li.textContent = i + 1 + ". " + tasks[i].text;
     if (tasks[i].done) {
       li.classList.add("done");
     }
+
+    const span = document.createElement("span");
+    span.textContent = i + 1 + ". " + tasks[i].text;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Удалить";
+
+    li.appendChild(span);
+    li.appendChild(deleteBtn);
 
     li.addEventListener("click", function () {
       li.classList.toggle("done");
@@ -52,10 +60,10 @@ function render() {
       saveTasks();
     });
 
-    li.addEventListener("dblclick", function () {
-      tasks.splice(i, 1); // 🔥 правильное удаление
+    deleteBtn.addEventListener("click", function () {
+      tasks.splice(i, 1);
       saveTasks();
-      render(); // 🔥 перерисовка
+      render();
     });
 
     list.appendChild(li);
