@@ -1,6 +1,7 @@
 const input = document.querySelector("#input");
 const btn = document.querySelector("#btn");
 const list = document.querySelector("#list");
+const counter = document.querySelector("#counter");
 const sound = new Audio("sound/meme.mp3");
 
 let tasks = [];
@@ -38,6 +39,7 @@ btn.addEventListener("click", function () {
 
 function render() {
   list.innerHTML = "";
+  counter.textContent = tasks.length;
 
   for (let i = 0; i < tasks.length; i++) {
     const li = document.createElement("li");
