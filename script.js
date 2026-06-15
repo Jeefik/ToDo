@@ -2,9 +2,11 @@ const input = document.querySelector("#input");
 const btn = document.querySelector("#btn");
 const list = document.querySelector("#list");
 const counter = document.querySelector("#counter");
+const counterDone = document.querySelector("#counterDone");
 const sound = new Audio("sound/meme.mp3");
 
 let tasks = [];
+
 loadTasks();
 
 function saveTasks() {
@@ -41,6 +43,15 @@ function render() {
   list.innerHTML = "";
   counter.textContent = tasks.length;
 
+  let completedTasks = 0;
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].done) {
+      completedTasks++;
+    }
+  }
+
+  counterDone.textContent = completedTasks;
+
   for (let i = 0; i < tasks.length; i++) {
     const li = document.createElement("li");
     if (tasks[i].done) {
@@ -57,9 +68,9 @@ function render() {
     li.appendChild(deleteBtn);
 
     li.addEventListener("click", function () {
-      li.classList.toggle("done");
       tasks[i].done = !tasks[i].done;
       saveTasks();
+      render();
     });
 
     deleteBtn.addEventListener("click", function () {
