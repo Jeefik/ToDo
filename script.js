@@ -74,9 +74,16 @@ function render() {
     });
 
     deleteBtn.addEventListener("click", function () {
-      tasks.splice(i, 1);
-      saveTasks();
-      render();
+      const isConfirm = confirm("Вы точно хотите удалить задачу?");
+      if (isConfirm) {
+        console.log("Apply");
+        tasks.splice(i, 1);
+        saveTasks();
+        render();
+      } else {
+        console.log("Cancel");
+        return
+      }
     });
 
     list.appendChild(li);
