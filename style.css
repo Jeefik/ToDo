@@ -1,3 +1,6 @@
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
 body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
@@ -31,6 +34,14 @@ input {
 button {
   padding: 8px 12px;
   cursor: pointer;
+}
+
+.deleteAll {
+  text-align: center;
+}
+
+#clearAll {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 ul {

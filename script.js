@@ -3,6 +3,7 @@ const btn = document.querySelector("#btn");
 const list = document.querySelector("#list");
 const counter = document.querySelector("#counter");
 const counterDone = document.querySelector("#counterDone");
+const clearAll = document.querySelector("#clearAll");
 const sound = new Audio("sound/meme.mp3");
 
 let tasks = [];
@@ -72,6 +73,11 @@ function render() {
       saveTasks();
       render();
     });
+    clearAll.addEventListener("click", function () {
+      tasks = [];
+      saveTasks();
+      render();
+    });
 
     deleteBtn.addEventListener("click", function () {
       const isConfirm = confirm("Вы точно хотите удалить задачу?");
@@ -82,7 +88,7 @@ function render() {
         render();
       } else {
         console.log("Cancel");
-        return
+        return;
       }
     });
 
