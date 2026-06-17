@@ -73,28 +73,28 @@ function render() {
       saveTasks();
       render();
     });
-    clearAll.addEventListener("click", function () {
-      tasks = [];
-      saveTasks();
-      render();
-    });
 
-    deleteBtn.addEventListener("click", function () {
+    deleteBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
       const isConfirm = confirm("Вы точно хотите удалить задачу?");
       if (isConfirm) {
-        console.log("Apply");
         tasks.splice(i, 1);
         saveTasks();
         render();
-      } else {
-        console.log("Cancel");
-        return;
       }
     });
 
     list.appendChild(li);
   }
 }
+clearAll.addEventListener("click", function () {
+  const isConfirmtwo = confirm("Вы точно хотите удалить все задачи?");
+  if (isConfirmtwo) {
+    tasks = [];
+    saveTasks();
+    render();
+  }
+});
 
 // Добавление по Enter
 input.addEventListener("keydown", function (e) {
