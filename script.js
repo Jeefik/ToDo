@@ -65,13 +65,28 @@ function render() {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Удалить";
 
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Редактировать";
+
     li.appendChild(span);
     li.appendChild(deleteBtn);
+    li.appendChild(editBtn);
 
     li.addEventListener("click", function () {
       tasks[i].done = !tasks[i].done;
       saveTasks();
       render();
+    });
+
+    editBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      let userInput = prompt("Введите новые данные:");
+
+      if (userInput !== null && userInput.trim() !== "") {
+        tasks[i].text = userInput;
+        saveTasks();
+        render();
+      }
     });
 
     deleteBtn.addEventListener("click", function (e) {
