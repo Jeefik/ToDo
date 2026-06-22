@@ -26,10 +26,22 @@ function loadTasks() {
 
 btn.addEventListener("click", function () {
   if (input.value === "") return;
+  for (let i = 0; i < tasks.length; i++) {
+    if (
+      tasks[i].text.trim().toLowerCase() === input.value.trim().toLowerCase()
+    ) {
+      const isConfirmThree = confirm(
+        "Такая задача уже существует, добавить ещё раз?",
+      );
+      if (!isConfirmThree) {
+        return;
+      }
+      break;
+    }
+  }
   if (input.value.trim().toLowerCase() === "пинч лох") {
     sound.play();
   }
-
   tasks.push({
     text: input.value,
     done: false,
@@ -50,7 +62,6 @@ function render() {
       completedTasks++;
     }
   }
-
   counterDone.textContent = completedTasks;
 
   for (let i = 0; i < tasks.length; i++) {
@@ -108,6 +119,7 @@ clearAll.addEventListener("click", function () {
     tasks = [];
     saveTasks();
     render();
+    input.focus();
   }
 });
 
