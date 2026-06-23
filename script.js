@@ -25,7 +25,10 @@ function loadTasks() {
 }
 
 btn.addEventListener("click", function () {
-  if (input.value === "") return;
+  if (input.value.trim() === "") {
+    input.classList.add("error");
+    return;
+  }
   for (let i = 0; i < tasks.length; i++) {
     if (
       tasks[i].text.trim().toLowerCase() === input.value.trim().toLowerCase()
@@ -50,6 +53,10 @@ btn.addEventListener("click", function () {
   render();
 
   input.value = "";
+});
+
+input.addEventListener("input", function () {
+  input.classList.remove("error");
 });
 
 function render() {

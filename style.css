@@ -76,3 +76,7 @@ li button {
 li:hover {
   background: #f0f0f0;
 }
+
+.error {
+  border: 2px solid red;
+}
