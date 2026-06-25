@@ -80,3 +80,18 @@ li:hover {
 .error {
   border: 2px solid red;
 }
+
+.filter{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 2px;
+}
+
+.filter button {
+  flex: 1;
+}
+
+.active-filter{
+  border: 3px solid red
+}

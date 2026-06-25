@@ -5,8 +5,13 @@ const counter = document.querySelector("#counter");
 const counterDone = document.querySelector("#counterDone");
 const clearAll = document.querySelector("#clearAll");
 const sound = new Audio("sound/meme.mp3");
+const allBtn = document.querySelector("#allBtn");
+const activeBtn = document.querySelector("#activeBtn");
+const completedBtn = document.querySelector("#completedBtn");
+const ACTIVE_FILTER_CLASS = "active-filter";
 
 let tasks = [];
+let currentFilter = "all";
 
 loadTasks();
 
@@ -20,7 +25,7 @@ function loadTasks() {
   if (savedTasks !== null) {
     tasks = JSON.parse(savedTasks);
   }
-
+  updateFilterButtons();
   render();
 }
 
@@ -56,6 +61,8 @@ btn.addEventListener("click", function () {
 });
 
 input.addEventListener("input", function () {
+  input.classList.add("error");
+  return;
   input.classList.remove("error");
 });
 
@@ -72,6 +79,12 @@ function render() {
   counterDone.textContent = completedTasks;
 
   for (let i = 0; i < tasks.length; i++) {
+    if (currentFilter === "active" && tasks[i].done === true) {
+      continue;
+    }
+    if (currentFilter === "completed" && tasks[i].done === false) {
+      continue;
+    }
     const li = document.createElement("li");
     if (tasks[i].done) {
       li.classList.add("done");
@@ -129,6 +142,40 @@ clearAll.addEventListener("click", function () {
     input.focus();
   }
 });
+
+allBtn.addEventListener("click", function () {
+  currentFilter = "all";
+  updateFilterButtons();
+  render();
+});
+
+activeBtn.addEventListener("click", function () {
+  currentFilter = "active";
+  updateFilterButtons();
+  render();
+});
+
+completedBtn.addEventListener("click", function () {
+  currentFilter = "completed";
+  updateFilterButtons();
+  render();
+});
+
+function  updateFilterButtons(){
+  allBtn.classList.remove(ACTIVE_FILTER_CLASS);
+  activeBtn.classList.remove(ACTIVE_FILTER_CLASS);
+  completedBtn.classList.remove(ACTIVE_FILTER_CLASS);
+
+  if (currentFilter === "all"){
+    allBtn.classList.add(ACTIVE_FILTER_CLASS)
+  }
+  if (currentFilter === "active"){
+    activeBtn.classList.add(ACTIVE_FILTER_CLASS)
+  }
+  if (currentFilter === "completed"){
+    completedBtn.classList.add(ACTIVE_FILTER_CLASS)
+  }
+}
 
 // Добавление по Enter
 input.addEventListener("keydown", function (e) {
