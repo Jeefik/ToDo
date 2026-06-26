@@ -9,9 +9,11 @@ const allBtn = document.querySelector("#allBtn");
 const activeBtn = document.querySelector("#activeBtn");
 const completedBtn = document.querySelector("#completedBtn");
 const ACTIVE_FILTER_CLASS = "active-filter";
+const searchInput = document.querySelector("#searchInput");
 
 let tasks = [];
 let currentFilter = "all";
+let currentSearch = "";
 
 loadTasks();
 
@@ -60,11 +62,9 @@ btn.addEventListener("click", function () {
   input.value = "";
 });
 
-input.addEventListener("input", function () {
-  input.classList.add("error");
-  return;
-  input.classList.remove("error");
-});
+  input.addEventListener("input", function () {
+    input.classList.remove("error");
+  });
 
 function render() {
   list.innerHTML = "";
@@ -83,6 +83,13 @@ function render() {
       continue;
     }
     if (currentFilter === "completed" && tasks[i].done === false) {
+      continue;
+    }
+
+    if (
+      currentSearch.trim() !== "" &&
+      !tasks[i].text.toLowerCase().includes(currentSearch.toLowerCase())
+    ) {
       continue;
     }
     const li = document.createElement("li");
@@ -161,21 +168,26 @@ completedBtn.addEventListener("click", function () {
   render();
 });
 
-function  updateFilterButtons(){
+function updateFilterButtons() {
   allBtn.classList.remove(ACTIVE_FILTER_CLASS);
   activeBtn.classList.remove(ACTIVE_FILTER_CLASS);
   completedBtn.classList.remove(ACTIVE_FILTER_CLASS);
 
-  if (currentFilter === "all"){
-    allBtn.classList.add(ACTIVE_FILTER_CLASS)
+  if (currentFilter === "all") {
+    allBtn.classList.add(ACTIVE_FILTER_CLASS);
   }
-  if (currentFilter === "active"){
-    activeBtn.classList.add(ACTIVE_FILTER_CLASS)
+  if (currentFilter === "active") {
+    activeBtn.classList.add(ACTIVE_FILTER_CLASS);
   }
-  if (currentFilter === "completed"){
-    completedBtn.classList.add(ACTIVE_FILTER_CLASS)
+  if (currentFilter === "completed") {
+    completedBtn.classList.add(ACTIVE_FILTER_CLASS);
   }
 }
+
+searchInput.addEventListener("input", function () {
+  currentSearch = searchInput.value;
+  render();
+});
 
 // Добавление по Enter
 input.addEventListener("keydown", function (e) {
