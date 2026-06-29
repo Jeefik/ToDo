@@ -62,9 +62,9 @@ btn.addEventListener("click", function () {
   input.value = "";
 });
 
-  input.addEventListener("input", function () {
-    input.classList.remove("error");
-  });
+input.addEventListener("input", function () {
+  input.classList.remove("error");
+});
 
 function render() {
   list.innerHTML = "";
@@ -77,6 +77,7 @@ function render() {
     }
   }
   counterDone.textContent = completedTasks;
+  let shownTasks = 0;
 
   for (let i = 0; i < tasks.length; i++) {
     if (currentFilter === "active" && tasks[i].done === true) {
@@ -138,6 +139,17 @@ function render() {
     });
 
     list.appendChild(li);
+    shownTasks++;
+  }
+
+  if (tasks.length === 0) {
+    const emptyLi = document.createElement("li");
+    emptyLi.textContent = "Список пуст";
+    list.appendChild(emptyLi);
+  } else if (shownTasks === 0) {
+    const noneLi = document.createElement("li");
+    noneLi.textContent = "🔍 Ничего не найдено";
+    list.appendChild(noneLi);
   }
 }
 clearAll.addEventListener("click", function () {
