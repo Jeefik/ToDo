@@ -18,7 +18,8 @@ body {
 }
 
 h1 {
-  text-align: center;
+  text-align: left;
+  margin-bottom: 7px;
 }
 
 .controls {
@@ -26,12 +27,12 @@ h1 {
   gap: 10px;
 }
 
-input {
+.controls input {
   flex: 1;
-  padding: 8px;
+  padding: 9px;
 }
 
-button {
+.controls button {
   padding: 8px 12px;
   cursor: pointer;
 }
@@ -41,6 +42,8 @@ button {
 }
 
 #clearAll {
+  background-color: rgb(202, 156, 156);
+  color: rgb(26, 26, 44);
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
@@ -81,7 +84,7 @@ li:hover {
   border: 2px solid red;
 }
 
-.filter{
+.filter {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
@@ -92,6 +95,13 @@ li:hover {
   flex: 1;
 }
 
-.active-filter{
-  border: 3px solid red
+.active-filter {
+    background: #dbeafe;
+    border: 2px solid #2563eb;
+}
+
+.inputsearch {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 7px;
 }
