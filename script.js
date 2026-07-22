@@ -55,6 +55,7 @@ btn.addEventListener("click", function () {
   tasks.push({
     text: input.value,
     done: false,
+    createdAt: Date.now(),
   });
   saveTasks();
   render();
@@ -65,6 +66,19 @@ btn.addEventListener("click", function () {
 input.addEventListener("input", function () {
   input.classList.remove("error");
 });
+
+function formatDate(createdAt) {
+  if (!createdAt) return "—"; // Защита от undefined
+
+  const date = new Date(createdAt);
+  return date.toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 function render() {
   list.innerHTML = "";
@@ -97,17 +111,25 @@ function render() {
     if (tasks[i].done) {
       li.classList.add("done");
     }
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "task-content";
 
     const span = document.createElement("span");
     span.textContent = i + 1 + ". " + tasks[i].text;
+
+    const dateSpan = document.createElement("span");
+    dateSpan.className = "task-date";
+    dateSpan.textContent = formatDate(tasks[i].createdAt);
+    contentDiv.appendChild(span);
+    contentDiv.appendChild(dateSpan);
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Удалить";
 
     const editBtn = document.createElement("button");
     editBtn.textContent = "Редактировать";
-
     li.appendChild(span);
+    li.appendChild(contentDiv);
     li.appendChild(deleteBtn);
     li.appendChild(editBtn);
 
