@@ -80,6 +80,32 @@ function formatDate(createdAt) {
   });
 }
 
+function formatTimeAgo(createdAt) {
+  const timeDifference = Date.now() - createdAt;
+  const minutes = Math.floor(timeDifference / 60000);
+  const hours = Math.floor(timeDifference / 3600000);
+
+  if (minutes < 1) {
+    return "Только что";
+  }
+  if (minutes === 1) {
+    return minutes + " минуту назад";
+  }
+  if (minutes < 60) {
+    return minutes + " минут назад";
+  }
+  if (hours >= 24) {
+    return formatDate(createdAt);
+  }
+  if (hours === 1) {
+    return hours + " час назад";
+  }
+  if (hours === 2 || hours === 3 || hours === 4) {
+    return hours + " часа назад";
+  }
+  return hours + " часов назад";
+}
+
 function render() {
   list.innerHTML = "";
   counter.textContent = tasks.length;
@@ -119,7 +145,7 @@ function render() {
 
     const dateSpan = document.createElement("span");
     dateSpan.className = "task-date";
-    dateSpan.textContent = formatDate(tasks[i].createdAt);
+    dateSpan.textContent = formatTimeAgo(tasks[i].createdAt);
     contentDiv.appendChild(span);
     contentDiv.appendChild(dateSpan);
 
