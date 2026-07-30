@@ -1,39 +1,46 @@
-const input = document.querySelector("#input");
-const btn = document.querySelector("#btn");
-const list = document.querySelector("#list");
+function formatTimeAgo(createdAt) {
+  const timeDifference = Date.now() - createdAt;
 
-let tasks = [];
-loadTasks();
+  const minutes = Math.floor(timeDifference / 60000);
 
-function savedTasks {
-    localStorage.setItem("tasks", JSON.stringify(tasks))
-}
+  const hours = Math.floor(timeDifference / 3600000);
 
-function loadTasks {
-    const savedTasks = localStorage.getItem("tasks");
-    if (savedTasks != null) {
-        tasks = JSON.parse(savedTasks)
+  const lastOneMinutes = minutes % 10;
+  const lastTwoMinutes = minutes % 100;
+
+  const lastOneHours = hours % 10;
+  const lastTwoHours = hours % 100;
+  
+  if (hours >= 1) {
+    if (hours >= 24) {
+      return formatDate(createdAt);
     }
-    render()
+
+    if (lastTwoHours >= 11 && lastTwoHours <= 14) {
+      return hours + " часов назад";
+    }
+
+    if (lastOneHours === 1) {
+      return hours + " час назад";
+    }
+    if (lastOneHours >= 2 && lastOneHours <= 4) {
+      return hours + " часа назад";
+    }
+    return hours + " часов назад";
+  }
+
+  if (minutes < 1) {
+    return "Только что";
+  }
+  if (lastTwoMinutes >= 11 && lastTwoMinutes <= 14) {
+    return minutes + " минут назад";
+  }
+  if (lastOneMinutes === 1) {
+    return minutes + " минуту назад";
+  }
+  if (lastOneMinutes >= 2 && lastOneMinutes <= 4) {
+    return minutes + " минуты назад";
+  }
+
+  return minutes + " минут назад";
 }
-
-btn.addEventListener("click", function(){
- if (input.value ==="") return;
- if (input.value.trim().toLowerCase() === "пинч лох"){
-    sound.play();
- }
- tasks.push({
-    text: input.value,
-    done: false,
-    })
-    savedTasks();
-    render();
-
-    input.value = "";
-
- });
-
- function render(){
-    list.innerHTML = "";
-
- }

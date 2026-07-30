@@ -31,9 +31,7 @@ function loadTasks() {
   render();
 }
 
-setInterval(function () {
-    render();
-}, 60000);
+setInterval(render, 60000);
 
 btn.addEventListener("click", function () {
   if (input.value.trim() === "") {
