@@ -86,7 +86,6 @@ function formatTimeAgo(createdAt) {
   const timeDifference = Date.now() - createdAt;
 
   const minutes = Math.floor(timeDifference / 60000);
-
   const hours = Math.floor(minutes / 60);
 
   const lastOneMinutes = minutes % 10;
@@ -96,10 +95,9 @@ function formatTimeAgo(createdAt) {
   const lastTwoHours = hours % 100;
 
   if (hours >= 24) {
-      return formatDate(createdAt);
-    }
+    return formatDate(createdAt);
+  }
   if (hours >= 1) {
-
     if (lastTwoHours >= 11 && lastTwoHours <= 14) {
       return hours + " часов назад";
     }
@@ -141,34 +139,35 @@ function render() {
   }
   counterDone.textContent = completedTasks;
   let shownTasks = 0;
+  //новый фильтр , вместо старого
 
-  for (let i = 0; i < tasks.length; i++) {
-    if (currentFilter === "active" && tasks[i].done === true) {
+  const filteredTasks = tasks.filter((task) =>
+    task.text.toLowerCase().includes(currentSearch.toLowerCase()),
+  );
+
+  for (let i = 0; i < filteredTasks.length; i++) {
+    const task = filteredTasks[i];
+
+    if (currentFilter === "active" && task.done === true) {
       continue;
     }
-    if (currentFilter === "completed" && tasks[i].done === false) {
+    if (currentFilter === "completed" && task.done === false) {
       continue;
     }
 
-    if (
-      currentSearch.trim() !== "" &&
-      !tasks[i].text.toLowerCase().includes(currentSearch.toLowerCase())
-    ) {
-      continue;
-    }
     const li = document.createElement("li");
-    if (tasks[i].done) {
+    if (task.done) {
       li.classList.add("done");
     }
     const contentDiv = document.createElement("div");
     contentDiv.className = "task-content";
 
     const span = document.createElement("span");
-    span.textContent = i + 1 + ". " + tasks[i].text;
+    span.textContent = ++shownTasks + ". " + task.text;
 
     const dateSpan = document.createElement("span");
     dateSpan.className = "task-date";
-    dateSpan.textContent = formatTimeAgo(tasks[i].createdAt);
+    dateSpan.textContent = formatTimeAgo(task.createdAt);
     contentDiv.appendChild(span);
     contentDiv.appendChild(dateSpan);
 
@@ -183,7 +182,7 @@ function render() {
     li.appendChild(editBtn);
 
     li.addEventListener("click", function () {
-      tasks[i].done = !tasks[i].done;
+      task.done = !task.done
       saveTasks();
       render();
     });
@@ -193,7 +192,7 @@ function render() {
       let userInput = prompt("Введите новые данные:");
 
       if (userInput !== null && userInput.trim() !== "") {
-        tasks[i].text = userInput;
+        task.text = userInput;
         saveTasks();
         render();
       }
@@ -203,14 +202,14 @@ function render() {
       e.stopPropagation();
       const isConfirm = confirm("Вы точно хотите удалить задачу?");
       if (isConfirm) {
-        tasks.splice(i, 1);
+        const index = tasks.findIndex((item) => item.id === task.id);
+        tasks.splice(index, 1);
         saveTasks();
         render();
       }
     });
 
     list.appendChild(li);
-    shownTasks++;
   }
 
   if (tasks.length === 0) {
